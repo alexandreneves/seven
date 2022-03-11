@@ -7,6 +7,6 @@ interface iContext {
   data: any; // arbitrary space for passing data between middlewares
 }
 
-export async function onRequestGer(context: iContext) {
+export async function onRequestGet(context: iContext) {
   return new Response("hello world");
 }
