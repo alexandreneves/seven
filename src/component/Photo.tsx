@@ -21,7 +21,7 @@ export function Photo() {
   const [imageLoaded, setImageLoaded] = useState(false);
   const data: any = useDataSource(endpointResource("/api/photo"));
 
-  return typeof data === "undefined" ? (
+  return data === null ? (
     <Loader />
   ) : !data ? (
     <Error />

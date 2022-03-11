@@ -25,7 +25,7 @@ const WeekList = styled(UnorderedList)`
 export function GitHub() {
   const data: any = useDataSource(endpointResource("/api/github"));
 
-  return typeof data === undefined ? (
+  return data === null ? (
     <Loader />
   ) : !data ? (
     <Error />
