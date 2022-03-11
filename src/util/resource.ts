@@ -7,7 +7,7 @@ export const endpointResource = (endpoint: string) => async () => {
     .get(endpoint)
     .then((response: any) => {
       console.log("endpointResource() success", endpoint, response);
-      return response.data;
+      return response.data.error ? false : response.data;
     })
     .catch((err) => {
       console.error("endpointResource() failed", endpoint, err);

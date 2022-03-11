@@ -59,9 +59,9 @@ export function Track() {
     [render]
   );
 
-  return !data ? (
+  return typeof data === "undefined" ? (
     <Loader />
-  ) : data.error ? (
+  ) : !data ? (
     <Error />
   ) : data.data ? (
     <Wrapper>

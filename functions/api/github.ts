@@ -1,16 +1,18 @@
-import axios from "axios";
 import { iContext } from "../interface/iContext";
+import { defaultError } from "../util/callback";
 
 export async function onRequestGet(context: iContext) {
-  await axios({
-    method: "GET",
-    url: "https://skyline.github.com/alexandreneves/2022.json",
-  })
-    .then((payload) => {
-      const data = parseContributions(payload?.data?.contributions);
-      return new Response(JSON.stringify({ data }));
-    })
-    .catch((err) => new Response(JSON.stringify({ error: true })));
+  const endpoint = "https://skyline.github.com/alexandreneves/2022.json";
+  const response = await fetch(endpoint);
+  const data = await response.json();
+
+  try {
+    return new Response(
+      JSON.stringify({ data: parseContributions(data?.contributions) })
+    );
+  } catch (err) {
+    defaultError(err);
+  }
 }
 
 function parseContributions(weeks) {

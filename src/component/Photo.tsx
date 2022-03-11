@@ -19,13 +19,11 @@ const Image = styled.img<ImageProps>`
 
 export function Photo() {
   const [imageLoaded, setImageLoaded] = useState(false);
-  const data: any = useDataSource(
-    endpointResource("/api/test")
-  );
+  const data: any = useDataSource(endpointResource("/api/photo"));
 
-  return !data ? (
+  return typeof data === "undefined" ? (
     <Loader />
-  ) : data.error ? (
+  ) : !data ? (
     <Error />
   ) : (
     <Image

@@ -23,13 +23,11 @@ const WeekList = styled(UnorderedList)`
 `;
 
 export function GitHub() {
-  const data: any = useDataSource(
-    endpointResource("/api/github")
-  );
+  const data: any = useDataSource(endpointResource("/api/github"));
 
-  return !data ? (
+  return typeof data === undefined ? (
     <Loader />
-  ) : data.error ? (
+  ) : !data ? (
     <Error />
   ) : (
     <Wrapper>
