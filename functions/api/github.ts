@@ -4,7 +4,7 @@ import { iContext } from "../interface/iContext";
 export async function onRequestGet(context: iContext) {
   await axios({
     method: "GET",
-    url: "/api/github",
+    url: "https://skyline.github.com/alexandreneves/2022.json",
   })
     .then((payload) => {
       const data = parseContributions(payload?.data?.contributions);

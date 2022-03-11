@@ -24,7 +24,7 @@ const WeekList = styled(UnorderedList)`
 
 export function GitHub() {
   const data: any = useDataSource(
-    endpointResource("http://localhost:3001/github")
+    endpointResource("api/github")
   );
 
   return !data ? (

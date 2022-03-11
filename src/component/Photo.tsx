@@ -20,7 +20,7 @@ const Image = styled.img<ImageProps>`
 export function Photo() {
   const [imageLoaded, setImageLoaded] = useState(false);
   const data: any = useDataSource(
-    endpointResource("http://localhost:3001/photo")
+    endpointResource("/api/test")
   );
 
   return !data ? (
