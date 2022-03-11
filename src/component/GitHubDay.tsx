@@ -1,6 +1,7 @@
-import { format, addWeeks, addDays } from "date-fns";
+import { format } from "date-fns";
 import styled from "styled-components";
 import { iGitHubDay } from "../interface/iGitHub";
+import { getDateFromNumbers } from "../util/date";
 
 export const Day = styled.div`
   display: flex;
@@ -64,13 +65,6 @@ function getTitle(week: number, day: number, count?: number): string {
   payload.push(`on ${date}`);
 
   return payload.join(" ");
-}
-
-function getDateFromNumbers(year: number, week: number, day: number): Date {
-  let date = new Date(year, 0, 1); // 01/01/{year}
-  date = addWeeks(date, week - 1); // -1 to exclude current unfinised week
-  date = addDays(date, day + 1); // +1 because of zero index (0-6)
-  return date;
 }
 
 function getLevel(count = 0): number {
