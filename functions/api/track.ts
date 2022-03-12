@@ -16,7 +16,6 @@ export async function onRequestGet(context: iContext): Promise<Response> {
         if (rGetRefreshToken.ok) {
           const data = await rGetRefreshToken.json();
           const newToken = data.access_token;
-
           await context.env.SEVEN.put("spotifyToken", newToken);
 
           const rGetTrackRetry = await getSpotifyCurrentTrack(context);
@@ -27,9 +26,9 @@ export async function onRequestGet(context: iContext): Promise<Response> {
         }
       }
 
-      return defaultError({error: 1});
+      return defaultError({ n: 1, data });
     } catch (err) {
-      return defaultError({error: 2});
+      return defaultError();
     }
   }
 }
@@ -58,24 +57,31 @@ async function getBasicToken(context: iContext): Promise<string> {
 
 async function getSpotifyCurrentTrack(context: iContext): Promise<Response> {
   const endpoint = "https://api.spotify.com/v1/me/player/currently-playing";
+  const bearerToken = await getBearerToken(context);
+
   return fetch(endpoint, {
     headers: {
       Accept: "application/json",
-      Authorization: await getBearerToken(context),
+      Authorization: bearerToken,
     },
   });
 }
 
 async function getSpotifyRefreshToken(context: iContext): Promise<Response> {
   const endpoint = "https://accounts.spotify.com/api/token";
+  const basicToken = await getBasicToken(context);
+  const spotifyRefreshToken = await context.env.SEVEN.get(
+    "spotifyRefreshToken"
+  );
+
   return fetch(endpoint, {
     method: "POST",
     headers: {
-      Authorization: await getBasicToken(context),
+      Authorization: basicToken,
     },
     body: new URLSearchParams({
       grant_type: "refresh_token",
-      refresh_token: await context.env.SEVEN.get("spotifyRefreshToken"),
+      refresh_token: spotifyRefreshToken,
     }),
   });
 }
