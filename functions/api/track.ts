@@ -23,7 +23,7 @@ export async function onRequestGet(context: iContext): Promise<Response> {
             const data = await response2.json();
             const newToken = data.access_token;
 
-            SEVEN.put("spotifyToken", newToken);
+            context.env.SEVEN.put("spotifyToken", newToken);
 
             const response3 = await getSpotifyCurrentTrack(context);
 
@@ -65,18 +65,18 @@ function getSpotifyRefreshToken(context: iContext): Promise<any> {
     },
     body: new URLSearchParams({
       grant_type: "refresh_token",
-      refresh_token: SEVEN.get("spotifyRefreshToken"),
+      refresh_token: context.env.SEVEN.get("spotifyRefreshToken"),
     }),
   });
 }
 
 function getBearerToken(context: iContext): string {
-  return `Bearer ${SEVEN.get("spotifyToken")}`;
+  return `Bearer ${context.env.SEVEN.get("spotifyToken")}`;
 }
 
 function getBasicToken(context: iContext): string {
-  const clientId = SEVEN.get("spotifyClientId");
-  const clientSecret = SEVEN.get("spotifyClientSecret");
+  const clientId = context.env.SEVEN.get("spotifyClientId");
+  const clientSecret = context.env.SEVEN.get("spotifyClientSecret");
   const token = `${clientId}:${clientSecret}`;
   return `Basic ${btoa(token)}`;
 }
