@@ -54,10 +54,7 @@ const Title = styled.div`
 
 export function Track() {
   const render = useForceRender(3 * 60 * 1_000);
-  const data: any = useDataSource(
-    endpointResource("http://localhost:3001/track"),
-    [render]
-  );
+  const data: any = useDataSource(endpointResource("/api/track"), [render]);
 
   return data === null ? (
     <Loader />

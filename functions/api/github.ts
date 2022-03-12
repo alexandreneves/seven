@@ -4,9 +4,11 @@ import { defaultError } from "../util/callback";
 export async function onRequestGet(context: iContext) {
   const endpoint = "https://skyline.github.com/alexandreneves/2022.json";
   const response = await fetch(endpoint);
-  const data = await response.json();
+
+  if (!response.ok) return defaultError();
 
   try {
+    const data = await response.json();
     return new Response(
       JSON.stringify({ data: parseContributions(data?.contributions) })
     );

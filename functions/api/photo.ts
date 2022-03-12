@@ -10,11 +10,16 @@ export async function onRequestGet(context: iContext) {
       "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8",
       "X-Requested-With": "XMLHttpRequest",
     },
-    body: "link=https%3A%2F%2Fwww.instagram.com%2Faneves&downloader=profile",
+    body: new URLSearchParams({
+      link: "https://www.instagram.com/aneves",
+      downloader: "profile",
+    }),
   });
-  const data = await response.json();
+
+  if (!response.ok) return defaultError();
 
   try {
+    const data = await response.json();
     const $ = cheerio.load(data.html);
     const photo = $(".post img").attr("src");
     return new Response(JSON.stringify({ data: photo }));
