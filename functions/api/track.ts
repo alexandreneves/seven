@@ -2,10 +2,6 @@ import { iContext } from "../interface/iContext";
 import { defaultError } from "../util/callback";
 
 export async function onRequestGet(context: iContext): Promise<Response> {
-  const list = await context.env.SEVEN.list();
-  const test = await context.env.SEVEN.get("spotifyClientId");
-  return new Response(JSON.stringify({ list, test }));
-
   const rGetTrack = await getSpotifyCurrentTrack(context);
 
   if (rGetTrack.ok) {
@@ -31,9 +27,9 @@ export async function onRequestGet(context: iContext): Promise<Response> {
         }
       }
 
-      return defaultError();
+      return defaultError({error: 1});
     } catch (err) {
-      return defaultError();
+      return defaultError({error: 2});
     }
   }
 }
