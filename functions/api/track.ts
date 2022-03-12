@@ -1,8 +1,6 @@
 import { iContext } from "../interface/iContext";
 import { defaultError } from "../util/callback";
 
-const err = [];
-
 export async function onRequestGet(context: iContext): Promise<Response> {
   const rGetTrack = await getSpotifyCurrentTrack(context);
 
@@ -12,29 +10,17 @@ export async function onRequestGet(context: iContext): Promise<Response> {
     try {
       const data = await rGetTrack.json();
 
-      err.push({ 0: data.error.status });
-
       if (data.error.status === 401) {
         const rGetRefreshToken = await getSpotifyRefreshToken(context);
-        const data = await rGetRefreshToken.json();
-
-        err.push({ 1: rGetRefreshToken.ok, data});
-
         try {
           if (rGetRefreshToken.ok) {
             const data = await rGetRefreshToken.json();
 
-            err.push({ 2: data });
-
             const newToken = data.access_token;
-
-            err.push({ 3: newToken });
 
             await context.env.SEVEN.put("spotifyToken", newToken);
 
             const rGetTrackRetry = await getSpotifyCurrentTrack(context);
-
-            err.push({ 4: rGetTrackRetry.ok });
 
             if (rGetTrackRetry.ok) {
               return await getCurrentTrackResponse(rGetTrackRetry);
@@ -45,9 +31,7 @@ export async function onRequestGet(context: iContext): Promise<Response> {
         }
       }
 
-      const token = await context.env.SEVEN.get("spotifyToken");
-
-      return defaultError({ n: 0, token, err });
+      return defaultError();
     } catch (err) {
       return defaultError();
     }
@@ -81,8 +65,6 @@ async function getSpotifyCurrentTrack(context: iContext): Promise<Response> {
   const endpoint = "https://api.spotify.com/v1/me/player/currently-playing";
   const bearerToken = await getBearerToken(context);
 
-  err.push({ bet: bearerToken });
-
   return fetch(endpoint, {
     headers: {
       Accept: "application/json",
@@ -97,9 +79,6 @@ async function getSpotifyRefreshToken(context: iContext): Promise<Response> {
   const spotifyRefreshToken = await context.env.SEVEN.get(
     "spotifyRefreshToken"
   );
-
-  err.push({ bat: basicToken });
-
   return fetch(endpoint, {
     method: "POST",
     headers: {
