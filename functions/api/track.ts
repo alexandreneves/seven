@@ -2,6 +2,8 @@ import { iContext } from "../interface/iContext";
 import { defaultError } from "../util/callback";
 
 export async function onRequestGet(context: iContext): Promise<Response> {
+  return new Response(JSON.stringify(context));
+  
   const response = await getSpotifyCurrentTrack(context);
 
   if (response.ok) {
@@ -40,13 +42,15 @@ export async function onRequestGet(context: iContext): Promise<Response> {
           }
         }
       }
+
+      return defaultError();
     } catch (err) {
       return defaultError();
     }
   }
 }
 
-function getSpotifyCurrentTrack(context: iContext): Promise<any> {
+function getSpotifyCurrentTrack(context: iContext): Promise<Response> {
   const endpoint = "https://api.spotify.com/v1/me/player/currently-playing";
   return fetch(endpoint, {
     headers: {
@@ -56,7 +60,7 @@ function getSpotifyCurrentTrack(context: iContext): Promise<any> {
   });
 }
 
-function getSpotifyRefreshToken(context: iContext): Promise<any> {
+function getSpotifyRefreshToken(context: iContext): Promise<Response> {
   const endpoint = "https://accounts.spotify.com/api/token";
   return fetch(endpoint, {
     method: "POST",
