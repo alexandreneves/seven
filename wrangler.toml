@@ -1,0 +1,5 @@
+name = "seven"
+account_id = "975f4631a7cada67c47dad680557276d"
+kv_namespaces = [
+    { binding = "SEVEN", id = "2b91c8cc255f4b75800bdc6eb58b17fb", preview_id = "2b91c8cc255f4b75800bdc6eb58b17fb" }
+]
