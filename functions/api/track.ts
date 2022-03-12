@@ -2,8 +2,8 @@ import { iContext } from "../interface/iContext";
 import { defaultError } from "../util/callback";
 
 export async function onRequestGet(context: iContext): Promise<Response> {
-  return new Response(JSON.stringify(context));
-  
+  return new Response(JSON.stringify({context, SEVEN}));
+
   const response = await getSpotifyCurrentTrack(context);
 
   if (response.ok) {
