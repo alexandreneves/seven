@@ -48,37 +48,37 @@ export async function onRequestGet(context: iContext): Promise<Response> {
   }
 }
 
-function getSpotifyCurrentTrack(context: iContext): Promise<Response> {
+async function getSpotifyCurrentTrack(context: iContext): Promise<Response> {
   const endpoint = "https://api.spotify.com/v1/me/player/currently-playing";
   return fetch(endpoint, {
     headers: {
       Accept: "application/json",
-      Authorization: getBearerToken(context),
+      Authorization: await getBearerToken(context),
     },
   });
 }
 
-function getSpotifyRefreshToken(context: iContext): Promise<Response> {
+async function getSpotifyRefreshToken(context: iContext): Promise<Response> {
   const endpoint = "https://accounts.spotify.com/api/token";
   return fetch(endpoint, {
     method: "POST",
     headers: {
-      Authorization: getBasicToken(context),
+      Authorization: await getBasicToken(context),
     },
     body: new URLSearchParams({
       grant_type: "refresh_token",
-      refresh_token: context.env.SEVEN.get("spotifyRefreshToken"),
+      refresh_token: await context.env.SEVEN.get("spotifyRefreshToken"),
     }),
   });
 }
 
-function getBearerToken(context: iContext): string {
-  return `Bearer ${context.env.SEVEN.get("spotifyToken")}`;
+async function getBearerToken(context: iContext): Promise<string> {
+  return `Bearer ${await context.env.SEVEN.get("spotifyToken")}`;
 }
 
-function getBasicToken(context: iContext): string {
-  const clientId = context.env.SEVEN.get("spotifyClientId");
-  const clientSecret = context.env.SEVEN.get("spotifyClientSecret");
+async function getBasicToken(context: iContext): Promise<string> {
+  const clientId = await context.env.SEVEN.get("spotifyClientId");
+  const clientSecret = await context.env.SEVEN.get("spotifyClientSecret");
   const token = `${clientId}:${clientSecret}`;
   return `Basic ${btoa(token)}`;
 }
