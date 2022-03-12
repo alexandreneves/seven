@@ -13,16 +13,23 @@ export async function onRequestGet(context: iContext): Promise<Response> {
       if (data.error.status === 401) {
         const rGetRefreshToken = await getSpotifyRefreshToken(context);
 
-        if (rGetRefreshToken.ok) {
-          const data = await rGetRefreshToken.json();
-          const newToken = data.access_token;
-          await context.env.SEVEN.put("spotifyToken", newToken);
+        try {
+          if (rGetRefreshToken.ok) {
+            const data = await rGetRefreshToken.json();
+            const newToken = data.access_token;
 
-          const rGetTrackRetry = await getSpotifyCurrentTrack(context);
+            await context.env.SEVEN.put("spotifyToken", newToken);
 
-          if (rGetTrackRetry.ok) {
-            return await getCurrentTrackResponse(rGetTrackRetry);
+            const rGetTrackRetry = await getSpotifyCurrentTrack(context);
+
+            if (rGetTrackRetry.ok) {
+              return await getCurrentTrackResponse(rGetTrackRetry);
+            }
           }
+        } catch (err) {
+          const token = await context.env.SEVEN.get("spotifyToken");
+          const payload = await rGetRefreshToken.json();
+          return defaultError({ n: 0, payload, token });
         }
       }
 
