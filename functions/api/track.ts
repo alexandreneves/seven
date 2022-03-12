@@ -16,8 +16,9 @@ export async function onRequestGet(context: iContext): Promise<Response> {
 
       if (data.error.status === 401) {
         const rGetRefreshToken = await getSpotifyRefreshToken(context);
+        const data = await rGetRefreshToken.json();
 
-        err.push({ 1: rGetRefreshToken.ok });
+        err.push({ 1: rGetRefreshToken.ok, data});
 
         try {
           if (rGetRefreshToken.ok) {
