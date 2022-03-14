@@ -1,6 +1,6 @@
 import { format } from "date-fns";
 import styled from "styled-components";
-import { iGitHubDay } from "../interface/iGitHub";
+import { GHDay } from "../interface/GH";
 import { getDateFromNumbers } from "../util/date";
 
 export const Day = styled.div`
@@ -11,33 +11,34 @@ export const Day = styled.div`
   height: 100%;
   border-radius: 3px;
 
+  border: 1px solid rgba(0 0 0 / 5%);
+
   text-transform: uppercase;
   font-size: 11px;
 
   &.level-0 {
-    background-color: #e2e2e2;
+    background-color: #f2ebf7;
   }
   &.level-1 {
-    background-color: #d7e0ad;
+    background-color: #dfdae8;
   }
   &.level-2 {
-    background-color: #d1e47f;
+    background-color: #c9bbdc;
   }
   &.level-3 {
-    background-color: #cdeb4b;
+    background-color: #9e82ae;
   }
   &.level-4 {
-    background-color: #c4e921;
+    background-color: #62397a;
   }
 `;
 
-export function GitHubDay({
-  item: day,
-  data,
-}: {
-  item: iGitHubDay;
+interface GitHubDayProps {
+  item: GHDay;
   data: any;
-}) {
+}
+
+export function GitHubDay({ item: day, data }: GitHubDayProps) {
   const dayNumber = data.index;
   const weekNumber = data.payload.week;
 

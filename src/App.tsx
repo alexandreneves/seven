@@ -4,6 +4,7 @@ import { Photo } from "./component/Photo";
 import { GitHub } from "./component/GitHub";
 import { About } from "./component/About";
 import { Cube } from "./component/Cube";
+import { Elements } from "./style/elements";
 
 const List = styled.ul`
   list-style: none;
@@ -25,27 +26,30 @@ const Item = styled.li`
 
 export function App() {
   return (
-    <List>
-      <Item>
-        <Cube title="about">
-          <About />
-        </Cube>
-      </Item>
-      <Item>
-        <Cube title="github">
-          <GitHub />
-        </Cube>
-      </Item>
-      <Item>
-        <Cube title="last still">
-          <Photo />
-        </Cube>
-      </Item>
-      <Item>
-        <Cube title="listening">
-          <Track />
-        </Cube>
-      </Item>
-    </List>
+    <>
+      <Elements />
+      <List>
+        <Item>
+          <Cube title="about" widthMultiplier={2}>
+            <About />
+          </Cube>
+        </Item>
+        <Item>
+          <Cube title="github">
+            <GitHub />
+          </Cube>
+        </Item>
+        <Item>
+          <Cube title="last still">
+            <Photo />
+          </Cube>
+        </Item>
+        <Item>
+          <Cube title="listening">
+            <Track />
+          </Cube>
+        </Item>
+      </List>
+    </>
   );
 }

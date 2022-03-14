@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { iGitHubWeek } from "../interface/iGitHub";
+import { GHWeek } from "../interface/GH";
 import { GitHubDay } from "./GitHubDay";
 import { ListItems, UnorderedList } from "./ListItems";
 
@@ -17,12 +17,17 @@ const DayList = styled(UnorderedList)`
   }
 `;
 
-export function GitHubWeek({ item: week }: { item: iGitHubWeek; data: any }) {
+interface GitHubWeekProps {
+  item: GHWeek;
+  data: any;
+}
+
+export function GitHubWeek({ item }: GitHubWeekProps) {
   return (
     <DayList>
       <ListItems
-        items={week.days}
-        payload={{ week: week.week }}
+        items={item.days}
+        payload={{ week: item.week }}
         component={GitHubDay}
       />
     </DayList>

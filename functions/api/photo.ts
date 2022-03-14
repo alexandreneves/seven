@@ -1,8 +1,8 @@
 import * as cheerio from "cheerio";
-import { iContext } from "../interface/iContext";
+import { Context } from "../interface/Context";
 import { defaultError } from "../util/callback";
 
-export async function onRequestGet(context: iContext) {
+export async function onRequestGet(context: Context) {
   const endpoint = "https://igdownloader.com/ajax";
   const response = await fetch(endpoint, {
     method: "POST",
@@ -19,7 +19,7 @@ export async function onRequestGet(context: iContext) {
   if (!response.ok) return defaultError();
 
   try {
-    const data = await response.json();
+    const data: any = await response.json();
     const $ = cheerio.load(data.html);
     const photo = $(".post img").attr("src");
     return new Response(JSON.stringify({ data: photo }));

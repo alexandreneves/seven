@@ -1,33 +1,47 @@
 import styled from "styled-components";
 
-const Content = styled.div`
+const DEFAULT_WIDTH_MULTIPLIER = 1;
+interface CubeProps {
+  title: string;
+  widthMultiplier?: number;
+  children?: React.ReactNode;
+}
+
+const Content = styled.div<Partial<CubeProps>>`
   position: relative;
 
   overflow: hidden;
 
-  width: 200px;
+  width: ${(p) => `calc(200px * ${p.widthMultiplier})`};
   height: 200px;
 
-  padding: 10px;
+  padding: 12px;
 
   background-color: white;
-  box-shadow: 2px 2px 0 0 rgb(0 0 0 / 25%);
-  border-radius: 3px;
+  box-shadow: 4px 3px 0 0 rgb(255 255 255 / 25%);
+  border-radius: 2px;
 `;
 
 const Title = styled.h2`
+  margin: 0 5px 0 0;
+
+  color: white;
+  font-size: 26px;
+  font-weight: 600;
   text-transform: uppercase;
   text-align: right;
-  font-size: 10px;
-  margin: 0 5px;
-  font-weight: 400;
+  line-height: 0.8;
 `;
 
-export function Cube(props: any) {
+export function Cube({
+  title,
+  widthMultiplier = DEFAULT_WIDTH_MULTIPLIER,
+  children,
+}: CubeProps) {
   return (
     <>
-      <Title>{props.title}</Title>
-      <Content>{props.children}</Content>
+      <Title>{title}</Title>
+      <Content widthMultiplier={widthMultiplier}>{children}</Content>
     </>
   );
 }

@@ -1,9 +1,9 @@
-import { CubeCenteredText } from "../style";
+import { CubeCenteredText } from "../style/components";
 
 export function Error() {
   return (
     <CubeCenteredText>
-      something went wrong! run! run as fast as you can!
+      Something went wrong! Run! Run as fast as you can!
     </CubeCenteredText>
   );
 }

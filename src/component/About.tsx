@@ -1,27 +1,42 @@
-import styled from "styled-components";
 import imageLogoUrl from "../image/logo.png";
-import imageMeVectorUrl from "../image/me_vector.png";
 import imageMeUrl from "../image/me.png";
-import { CubeCenteredText, FadeIn } from "../style";
+import styled from "styled-components";
+import imageMeVectorUrl from "../image/me_vector.png";
+import { CubeCenteredText } from "../style/components";
+import { Social } from "./Social";
+import { fadeIn } from "../style/utils";
 
 const Wrapper = styled.div`
-  ${FadeIn};
+  ${fadeIn};
   height: 100%;
+  display: flex;
 `;
 
 const Image = styled.img`
-  width: 100%;
-  opacity: 0.1;
+  height: 100%;
 `;
+
+const ImageWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  min-width: 45%;
+`;
+
+const TextWrapper = styled.div``;
 
 export function About() {
   return (
     <Wrapper>
-      <Image src={imageMeVectorUrl} alt="logo" />
-      <CubeCenteredText>
-        hi, i'm alex, i'm a web developer, all around geek, with a passion for
-        motorcycles & photography.
-      </CubeCenteredText>
+      <ImageWrapper>
+        <Image src={imageMeVectorUrl} alt="logo" />
+      </ImageWrapper>
+      <TextWrapper>
+        <CubeCenteredText>
+          I'm Alex, I'm a web developer, all around geek with a passion for
+          motorcycles & photography.
+          <Social />
+        </CubeCenteredText>
+      </TextWrapper>
     </Wrapper>
   );
 }

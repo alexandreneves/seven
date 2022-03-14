@@ -12,15 +12,17 @@ export const OrderedList = styled.ol`
   // styles
 `;
 
+interface ListItemsProps {
+  items: any[];
+  payload?: any;
+  component: Function;
+}
+
 export function ListItems({
   items,
   payload,
   component: Component,
-}: {
-  items: any[];
-  payload?: any;
-  component: Function;
-}) {
+}: ListItemsProps) {
   return (
     <>
       {items.map((item, i) => (

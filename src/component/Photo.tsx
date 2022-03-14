@@ -1,7 +1,7 @@
 import { useState } from "react";
 import styled from "styled-components";
 import { useDataSource } from "../hook/useDataSource";
-import { FadeIn } from "../style";
+import { fadeIn } from "../style/utils";
 import { endpointResource } from "../util/resource";
 import { Error } from "./Error";
 import { Loader } from "./Loader";
@@ -11,7 +11,7 @@ interface ImageProps {
 }
 
 const Image = styled.img<ImageProps>`
-  ${(p) => p.dataLoaded && FadeIn}
+  ${(p) => p.dataLoaded && fadeIn}
 
   opacity: 0;
   width: 100%;

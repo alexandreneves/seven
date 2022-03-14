@@ -1,13 +1,14 @@
 import styled from "styled-components";
 import { useDataSource } from "../hook/useDataSource";
 import { useForceRender } from "../hook/useForceRender";
-import { CubeCenteredText, FadeIn } from "../style";
+import { CubeCenteredText } from "../style/components";
+import { fadeIn } from "../style/utils";
 import { endpointResource } from "../util/resource";
 import { Error } from "./Error";
 import { Loader } from "./Loader";
 
 const Wrapper = styled.div`
-  ${FadeIn};
+  ${fadeIn};
 
   height: 100%;
 `;
