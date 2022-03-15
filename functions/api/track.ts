@@ -10,7 +10,7 @@ export async function onRequestGet(context: Context): Promise<Response> {
     try {
       const data: any = await rGetTrack.json();
 
-      if (data.error.status === 401) {
+      if ([400, 401].includes(data.error.status)) {
         const rGetRefreshToken = await getSpotifyRefreshToken(context);
         try {
           if (rGetRefreshToken.ok) {
@@ -31,7 +31,6 @@ export async function onRequestGet(context: Context): Promise<Response> {
         }
       }
 
-      return new Response(JSON.stringify({ error: 1, context, data}))
       return defaultError();
     } catch (err) {
       return defaultError();
