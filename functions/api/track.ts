@@ -27,12 +27,15 @@ export async function onRequestGet(context: Context): Promise<Response> {
             }
           }
         } catch (err) {
+          return new Response(JSON.stringify({ error: 0, context}))
           return defaultError();
         }
       }
 
+      return new Response(JSON.stringify({ error: 1, context}))
       return defaultError();
     } catch (err) {
+      return new Response(JSON.stringify({ error: 2, context}))
       return defaultError();
     }
   }
