@@ -39,7 +39,7 @@ const Title = styled.div`
     box-shadow: 2px 2px 0 0 rgb(0 0 0 / 50%);
 
     font-weight: 400;
-    line-height: 1.6;
+    line-height: 1.4;
   }
 
   h2 {

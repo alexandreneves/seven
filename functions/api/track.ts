@@ -55,8 +55,8 @@ async function getBearerToken(context: Context): Promise<string> {
 }
 
 async function getBasicToken(context: Context): Promise<string> {
-  const clientId = await context.env.SEVEN.get("spotifyClientId");
-  const clientSecret = await context.env.SEVEN.get("spotifyClientSecret");
+  const clientId = await context.env.SPOTIFY_CLIENT_ID;
+  const clientSecret = await context.env.SPOTIFY_CLIENT_SECRET;
   const token = `${clientId}:${clientSecret}`;
   return `Basic ${btoa(token)}`;
 }
@@ -76,9 +76,7 @@ async function getSpotifyCurrentTrack(context: Context): Promise<Response> {
 async function getSpotifyRefreshToken(context: Context): Promise<Response> {
   const endpoint = "https://accounts.spotify.com/api/token";
   const basicToken = await getBasicToken(context);
-  const spotifyRefreshToken = await context.env.SEVEN.get(
-    "spotifyRefreshToken"
-  );
+  const spotifyRefreshToken = await context.env.SPOTIFY_REFRESH_TOKEN;
   return fetch(endpoint, {
     method: "POST",
     headers: {

@@ -1,6 +1,7 @@
 import styled from "styled-components";
 
 const DEFAULT_WIDTH_MULTIPLIER = 1;
+
 interface CubeProps {
   title: string;
   widthMultiplier?: number;
